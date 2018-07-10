@@ -6,10 +6,10 @@ File: index.md
 
 
 
-## Subdirectory "FOO" of bertfreudenberg/bertfreudenberg.github.io
+## Subdirectory "FOO" of repo bertfreudenberg/bertfreudenberg.github.io
 
 [FOO](FOO)
 
-## Subdirector "docs" of bertfreudenberg/foo
+## Subdirector "docs" of repo bertfreudenberg/foo
 
 [foo](foo)

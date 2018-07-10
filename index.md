@@ -8,8 +8,8 @@ File: index.md
 
 ## Subdirectory "FOO" of repo bertfreudenberg/bertfreudenberg.github.io
 
-[FOO](FOO)
+[bertfreudenberg.github.io/FOO](FOO)
 
 ## Subdirector "docs" of repo bertfreudenberg/foo
 
-[foo](foo)
+[bertfreudenberg.github.io/foo](foo)

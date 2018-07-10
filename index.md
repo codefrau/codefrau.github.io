@@ -1,8 +1,8 @@
 # Test GitHub Pages URL overlays
 
-Repo: bertfreudenberg/bertfreudenberg.github.io
+Repo: [bertfreudenberg/bertfreudenberg.github.io](https://github.com/bertfreudenberg/bertfreudenberg.github.io)
 
-File: index.md
+File: [index.md](https://github.com/bertfreudenberg/bertfreudenberg.github.io/blob/master/index.md)
 
 
 

@@ -1,5 +1,5 @@
 # test FOO
 
-repo: bertfreudenberg.github.io
+repo: bertfreudenberg/bertfreudenberg.github.io
 
 file: FOO/index.md

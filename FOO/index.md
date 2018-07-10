@@ -1,4 +1,4 @@
-# Test GitHub Pages overlays
+# Test GitHub Pages URL overlays
 
 repo: bertfreudenberg/bertfreudenberg.github.io
 

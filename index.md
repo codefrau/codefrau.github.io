@@ -10,6 +10,6 @@ File: index.md
 
 [FOO](FOO)
 
-## Subdirector "docs" of bertfreudenberg/FOO
+## Subdirector "docs" of bertfreudenberg/foo
 
 [foo](foo)

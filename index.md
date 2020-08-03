@@ -8,8 +8,8 @@ File: [index.md](https://github.com/codefrau/codefrau.github.io/blob/master/inde
 
 ## Subdirectory "FOO" of repo codefrau/codefrau.github.io
 
-[codefrau.github.io/FOO](FOO)
+[https://codefrau.github.io/FOO](FOO)
 
 ## Subdirector "docs" of repo codefrau/foo
 
-[codefrau.github.io/foo](foo)
+[https://codefrau.github.io/foo](foo)

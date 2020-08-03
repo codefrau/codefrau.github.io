@@ -1,5 +1,5 @@
 # Test GitHub Pages URL overlays
 
-repo: bertfreudenberg/bertfreudenberg.github.io
+repo: codefrau/codefrau.github.io
 
 file: FOO/index.md

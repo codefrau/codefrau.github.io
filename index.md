@@ -1,15 +1,15 @@
 # Test GitHub Pages URL overlays
 
-Repo: [bertfreudenberg/bertfreudenberg.github.io](https://github.com/bertfreudenberg/bertfreudenberg.github.io)
+Repo: [codefrau/codefrau.github.io](https://github.com/codefrau/codefrau.github.io)
 
-File: [index.md](https://github.com/bertfreudenberg/bertfreudenberg.github.io/blob/master/index.md)
+File: [index.md](https://github.com/codefrau/codefrau.github.io/blob/master/index.md)
 
 
 
-## Subdirectory "FOO" of repo bertfreudenberg/bertfreudenberg.github.io
+## Subdirectory "FOO" of repo codefrau/codefrau.github.io
 
-[bertfreudenberg.github.io/FOO](FOO)
+[codefrau.github.io/FOO](FOO)
 
-## Subdirector "docs" of repo bertfreudenberg/foo
+## Subdirector "docs" of repo codefrau/foo
 
-[bertfreudenberg.github.io/foo](foo)
+[codefrau.github.io/foo](foo)

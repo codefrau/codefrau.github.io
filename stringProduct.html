@@ -11,6 +11,7 @@
                 font-family: monospace;
             }
         </style>
+        <script src="https://unpkg.com/prismjs@1.24"></script>
         <link rel="stylesheet" href="https://unpkg.com/prismjs@1.24/themes/prism-twilight.css" />
     </head>
     <body>
@@ -153,10 +154,11 @@ Croquet.Session.join({
     tps: 0,
 });
 
-// Show source
+// Show highlighted source
 source.innerText = script.innerText;
-</script>
-
-        <script src="https://unpkg.com/prismjs@1.24"></script>
+Prism.hooks.add('before-highlight', env => {
+    env.code = script.innerText;
+});
+        </script>
     </body>
 </html>

@@ -1,0 +1,73 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Croquet Counter</title>
+        <style>
+            body { font-family: monospace; }
+        </style>
+        <script src="https://unpkg.com/@croquet/croquet@1.0"></script>
+        <script src="https://unpkg.com/prismjs@1.24"></script>
+        <link rel="stylesheet" href="https://unpkg.com/prismjs@1.24/themes/prism-twilight.css" />
+    </head>
+    <body>
+        <h1 id="output">...</h1>
+        <button id="button">Reset</button>
+        <p>
+            This is an extremely simple <a href="https://croquet.io/">Croquet</a> app.
+            It is built as a single static HTML page.
+            For convenience, it shows its own embedded script source code below.
+        </p>
+        <pre><code id="source" class="language-js"></code></pre>
+
+<script id="script">// Define a Model running in the shared Croquet VM
+class Counter extends Croquet.Model {
+    init() {
+        this.n = 0;
+        this.subscribe("counter", "set", this.set);
+        this.future(1000).tick();
+    }
+    set(value) {
+        this.n = value;
+        this.publish("counter", "changed");
+    }
+    tick() {
+        this.set(this.n + 0.1);
+        this.future(100).tick();
+    }
+}
+Counter.register("Counter");
+
+// Build a local View mediating between the User and the Model
+class Display extends Croquet.View {
+    constructor(model) {
+        super(model);
+        this.model = model;
+        button.onclick = () => this.publish("counter", "set", 0);
+        this.subscribe("counter", "changed", this.changed);
+        this.changed();
+    }
+    changed() {
+        output.innerText = this.model.n.toFixed(1);
+    }
+}
+
+// Show QR code
+Croquet.App.makeWidgetDock();
+
+// Join session
+Croquet.Session.join({
+    apiKey: '1bfHo0sk3HLmzqxiaasuEFBccxNDE660vMzghymFm', // get your own from croquet.io/keys
+    appId: 'io.github.codefrau.counter',
+    name: Croquet.App.autoSession(),
+    password: Croquet.App.autoPassword(),
+    model: Counter,
+    view: Display,
+});
+
+// Show highlighted source
+source.innerText = script.innerText;
+Prism.hooks.add('before-highlight', env => env.code = script.innerText);
+        </script>
+    </body>
+</html>

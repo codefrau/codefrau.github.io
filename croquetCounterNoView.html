@@ -25,7 +25,7 @@ class Counter extends Croquet.Model {
     init() {
         this.n = 0;
         this.subscribe("counter", "set", this.set);
-        this.future(1000).tick();
+        this.future(100).tick();
     }
     set(value) {
         this.n = value;

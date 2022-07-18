@@ -1,0 +1,118 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Croquet Double Session Test</title>
+        <style>
+            body { font-family: monospace; }
+        </style>
+        <script src="https://unpkg.com/@croquet/croquet@1.0"></script>
+        <script src="https://unpkg.com/prismjs@1.24"></script>
+        <link rel="stylesheet" href="https://unpkg.com/prismjs@1.24/themes/prism-twilight.css" />
+    </head>
+    <body>
+        <h1 id="output1">...</h1>
+        <button id="button1">++</button>
+        <h1 id="output2">...</h1>
+        <button id="button2">++</button>
+        <p>
+            This is a <a href="https://croquet.io/">Croquet</a> app,
+            testing what happens when the same session is joined twice on the same page.
+        </p>
+        <p>
+            Look at the console log to see what happens.
+            Basically, if you publish the "increment" event from either view,
+            it will be received and processed by both model VMs independently,
+            as soon as they receive the event from the reflector.
+            The VM then will publish one "changed" event,
+            but <em>both</em> views will process it (which is a bug),
+            and not only the event published by "their" model.
+            That's because view subscriptions are global, currently, and not per-session.
+        </p>
+        <pre><code id="source" class="language-js"></code></pre>
+
+<script id="script">
+
+let vmCount = 0;
+let displayCount = 0;
+
+// Define a Model running in the shared Croquet VM
+class Counter extends Croquet.Model {
+    init() {
+        this.n = 0;
+        this.subscribe("counter", "increment", this.increment);
+    }
+    increment() {
+        this.n++;
+        this.publish("counter", "changed");
+        console.log(`VM#${this.vmId}: counter incremented to  ${this.n}`);
+    }
+    get vmId() {
+        if (!this.$vmId) this.$vmId = ++vmCount; // $props are ignored in snapshots
+        return this.$vmId;
+    }
+}
+Counter.register("Counter");
+
+// View mediates between the User and the Model
+class Display extends Croquet.View {
+    constructor(model) {
+        super(model);
+        this.displayId = ++displayCount;
+        this.model = model;
+        this.button.onclick = () => {
+            console.log(`Display#${this.displayId}: publishing increment`);
+            this.publish("counter", "increment");
+        };
+        this.subscribe("counter", "changed", this.changed);
+        this.changed("called from constructor");
+    }
+    get button() { return null; }
+    get output() { return null; }
+    changed(reason='received "changed"') {
+        console.log(`Display#${this.displayId}: ${reason}, counter in VM#${this.model.vmId} is ${this.model.n}`);
+        this.output.innerText = this.model.n;
+    }
+}
+
+// Build first local View
+class Display1 extends Display {
+    get button() { return button1; }
+    get output() { return output1; }
+}
+
+// Build a second local View
+class Display2 extends Display {
+    get button() { return button2; }
+    get output() { return output2; }
+}
+
+// Show QR code
+Croquet.App.makeWidgetDock();
+
+// Join session once
+Croquet.Session.join({
+    apiKey: '1bfHo0sk3HLmzqxiaasuEFBccxNDE660vMzghymFm', // get your own from croquet.io/keys
+    appId: 'io.github.codefrau.counter2',
+    name: Croquet.App.autoSession(),
+    password: Croquet.App.autoPassword(),
+    model: Counter,
+    view: Display1,
+});
+
+// Join session again
+Croquet.Session.join({
+    apiKey: '1bfHo0sk3HLmzqxiaasuEFBccxNDE660vMzghymFm', // get your own from croquet.io/keys
+    appId: 'io.github.codefrau.counter2',
+    name: Croquet.App.autoSession(),
+    password: Croquet.App.autoPassword(),
+    model: Counter,
+    view: Display2,
+});
+
+// Show highlighted source
+source.innerText = script.innerText;
+Prism.hooks.add('before-highlight', env => env.code = script.innerText);
+        </script>
+    </body>
+</html>

@@ -2,17 +2,17 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Croquet Counter</title>
+        <title>Croquet Anim</title>
         <style>
             body { font-family: monospace; }
         </style>
-        <script src="https://cdn.jsdelivr.net/npm/@croquet/croquet@1.0"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@croquet/croquet@1.1.0-18"></script>
         <script src="https://cdn.jsdelivr.net/npm/prismjs@1.24"></script>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.24/themes/prism-twilight.css" />
     </head>
     <body>
         <h1 id="output">...</h1>
-        <button id="button">Reset</button>
+        <button id="button">Restart</button>
         <p>
             This is a minimal <a href="https://croquet.io/">Croquet</a> app.
             It is built as a single static HTML page.
@@ -24,22 +24,21 @@
         <pre><code id="source" class="language-js"></code></pre>
 
 <script id="script">// Define a Model running in the shared Croquet VM
-class Counter extends Croquet.Model {
+class Anim extends Croquet.Model {
     init() {
         this.n = 0;
-        this.subscribe("counter", "set", this.set);
-        this.future(100).tick();
+        this.subscribe("anim", "jump", this.jump);
+        this.future(100, this.animate);
     }
-    set(value) {
+    jump(value) {
         this.n = value;
-        this.publish("counter", "changed");
     }
-    tick() {
-        this.set(this.n + 0.1);
-        this.future(100).tick();
+    animate() {
+        this.n += 0.1;
+        this.future(100, this.animate);
     }
 }
-Counter.register("Counter");
+Anim.register("Anim");
 
 // Show QR code
 Croquet.App.makeWidgetDock();
@@ -47,17 +46,12 @@ Croquet.App.makeWidgetDock();
 // Join session
 Croquet.Session.join({
     apiKey: '1bfHo0sk3HLmzqxiaasuEFBccxNDE660vMzghymFm', // get your own from croquet.io/keys
-    appId: 'io.github.codefrau.counter',
-    name: Croquet.App.autoSession(),
-    password: Croquet.App.autoPassword(),
-    model: Counter,
-})
-// define UI callbacks
-.then(({ model, view }) => {
-    button.onclick = () => view.publish("counter", "set", 0);
-    const changed = () => output.innerText = model.n.toFixed(1);
-    view.subscribe("counter", "changed", changed);
-    changed();
+    appId: 'io.github.codefrau.anim',
+    model: Anim,
+}).then(({ model, view }) => {
+    // connect model to UI
+    button.onclick = () => view.publish("anim", "jump", 0);
+    view.update = () => output.innerText = model.n.toFixed(1);
 });
 </script>
 

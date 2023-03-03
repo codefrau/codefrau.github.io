@@ -14,7 +14,7 @@
         <h1 id="output">...</h1>
         <button id="button">Reset</button>
         <p>
-            This is an extremely simple <a href="https://croquet.io/">Croquet</a> app.
+            This is a minimal <a href="https://croquet.io/">Croquet</a> app.
             It is built as a single static HTML page.
             For convenience, it shows its own embedded script source code below.
         </p>
@@ -67,10 +67,13 @@ Croquet.Session.join({
     model: Counter,
     view: Display,
 });
+</script>
 
-// Show highlighted source
-source.innerText = script.innerText;
-Prism.hooks.add('before-highlight', env => env.code = script.innerText);
+        <script>
+            // Show highlighted source
+            source.innerText = script.innerText;
+            Prism.hooks.add('before-highlight', env => env.code = script.innerText);
         </script>
+
     </body>
 </html>
